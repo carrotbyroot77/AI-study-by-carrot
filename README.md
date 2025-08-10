@@ -1,7 +1,9 @@
 
 # weather-mcp
 
-로컬 FastMCP 서버에서 현재 날씨를 가져와 **규칙 기반 조언**을 생성하고, 선택적으로 **OpenAI Responses API로 자연어 다듬기**까지 해 주는 미니 프로젝트이다. Windows + PowerShell 기준 예시를 포함한다.
+로컬 FastMCP 서버에서 현재 날씨를 가져와 **규칙 기반 조언**을 생성하고, <br>
+선택적으로 **OpenAI Responses API로 자연어 다듬기**까지 해 주는 미니 프로젝트이다. <br>
+Windows + PowerShell 기준 예시를 포함한다. <br>
 
 ---
 
