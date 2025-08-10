@@ -8,12 +8,25 @@ Windows + PowerShell 기준 예시를 포함한다. <br>
 ---
 
 ## 구성 파일
-- **`weather_server.py`**: FastMCP 호환 서버. `weather_now(city)` 툴을 노출한다. 현재 기온/풍속 + 체감온도/자외선/강수/습도 등 확장 지표를 반환하며, 사람용 요약문도 함께 제공한다. HTTP (stateless)로 `/mcp/` 경로에서 서비스.
-- **`advisor.py`**: MCP 서버에 JSON-RPC(`tools/call`)로 요청 → 구조화 데이터 받아서 조언 생성. `--ai` 옵션으로 OpenAI Responses API를 통해 자연어 한두 문장으로 다듬을 수 있다. 톤(`--tone`), 길이(`--detail`) 조절 가능.
-- **`mcp_test.py`**: 간단한 도구 호출 테스트 스크립트. SSE(`text/event-stream`) 응답에서 `data:` 라인만 파싱해 결과 확인.
-- **`test_openai.py`**: OpenAI SDK 통신 스모크 테스트.
-- **`.gitignore`**: 가상환경/캐시/IDE 설정/민감 파일 무시.
-
+- **`weather_server.py`**: FastMCP 호환 서버. `weather_now(city)` 툴을 노출한다.<br>
+  현재 기온/풍속 + 체감온도/자외선/강수/습도 등 확장 지표를 반환하며, 사람용 요약문도 함께 제공한다.<br>
+  HTTP (stateless)로 `/mcp/` 경로에서 서비스.<br>
+  <br>
+  
+- **`advisor.py`**: MCP 서버에 JSON-RPC(`tools/call`)로 요청 → 구조화 데이터 받아서 조언 생성.<br>
+  `--ai` 옵션으로 OpenAI Responses API를 통해 자연어 한두 문장으로 다듬을 수 있다.<br>
+  톤(`--tone`), 길이(`--detail`) 조절 가능.<br>
+  <br>
+  
+- **`mcp_test.py`**: 간단한 도구 호출 테스트 스크립트.<br>
+  SSE(`text/event-stream`) 응답에서 `data:` 라인만 파싱해 결과 확인.<br>
+  <br>
+  
+- **`test_openai.py`**: OpenAI SDK 통신 스모크 테스트.<br>
+  <br>
+  
+- **`.gitignore`**: 가상환경/캐시/IDE 설정/민감 파일 무시.<br>
+<br>
 ---
 
 ## 요구 사항
