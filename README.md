@@ -210,6 +210,11 @@ python advisor.py Seoul Busan Incheon --ai --tone friendly --detail medium
 <img width="960" height="1030" alt="다른 powershell에서 mcp+AI 작동 화면" src="https://github.com/user-attachments/assets/731c4b3f-07f0-473c-ba62-88a45f9330b1" />
 <br>
 
+**(3)기온 변화에 따라 달라지는 AI 어이스트의 조언**
+<img width="937" height="116" alt="기온 변화로 달라진 AI 어시스턴트 조언" src="https://github.com/user-attachments/assets/2ca916d4-30e7-44b3-ae2e-73a0a8291247" />
+<br>
+
+
 ---
 # 추가 설명(필요시 확인)
 ## 구성 파일
