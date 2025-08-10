@@ -5,6 +5,10 @@
 선택적으로 **OpenAI Responses API로 자연어 다듬기**까지 해 주는 미니 프로젝트이다. <br>
 Windows + PowerShell 기준 예시를 포함한다. <br>
 
+# 작업화면
+<img width="960" height="1030" alt="다른 powershell에서 mcp+AI 작동 화면" src="https://github.com/user-attachments/assets/fbca313d-07f3-496b-9076-d375f56180f5" />
+<img width="960" height="1030" alt="서버 작동 화면" src="https://github.com/user-attachments/assets/9ecc1701-4ee5-47e0-bea5-de45c8afcb79" />
+
 ---
 
 ## 구성 파일
