@@ -211,7 +211,8 @@ python advisor.py Seoul Busan Incheon --ai --tone friendly --detail medium
 <br>
 
 **(3)기온 변화에 따라 달라지는 AI 어이스트의 조언**
-<img width="937" height="116" alt="기온 변화로 달라진 AI 어시스턴트 조언" src="https://github.com/user-attachments/assets/2ca916d4-30e7-44b3-ae2e-73a0a8291247" />
+<img width="937" height="116" alt="기온 변화로 달라진 AI 어시스턴트 조언" src="https://github.com/user-attachments/assets/2b291117-5806-4c0c-83cc-d43a5cedc85c" />
+
 <br>
 
 
