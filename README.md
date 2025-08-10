@@ -7,11 +7,11 @@ Windows + PowerShell 기준 예시를 포함한다. <br>
 
 # 작업화면
 
-**서버화면**
+**(1)서버화면**
 <img width="960" height="1030" alt="서버 작동 화면" src="https://github.com/user-attachments/assets/9ecc1701-4ee5-47e0-bea5-de45c8afcb79" />
 <br>
 
-**powershell로 MCP 서버에서 AI 작동 화면**
+**(2)powershell로 MCP 서버에서 AI 작동 화면**
 <img width="960" height="1030" alt="다른 powershell에서 mcp+AI 작동 화면" src="https://github.com/user-attachments/assets/731c4b3f-07f0-473c-ba62-88a45f9330b1" />
 <br>
 
