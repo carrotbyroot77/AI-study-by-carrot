@@ -8,7 +8,7 @@ Windows + PowerShell 기준 예시를 포함한다. <br>
 ---
 
 # 실습 작업
-* vs code와 python 그리고 powershell(관리자) 으로 작업했다
+* **vs code와 python 그리고 powershell(관리자)** 으로 작업했다
 * `weather_server.py` 와 `advisor.py` 파일이 핵심 파일이다. 나머지는 test나 부수적인 파일
 
 
