@@ -1,5 +1,8 @@
 # weather_server.py  ─ FastMCP 호환 서버 (description 제거 + run 시그니처 자동 대응)
 from fastmcp import FastMCP
+from fastmcp.tools.tool import ToolResult
+from mcp.types import TextContent
+from typing import TypedDict, Optional
 import httpx
 import inspect
 import secrets
@@ -18,6 +21,7 @@ async def _safe_get(url: str, **kwargs):
     except httpx.RequestError as e:
         return {"error": f"외부 API 호출 실패: {e}"}
 
+
 async def _geocode(city: str):
     data = await _safe_get(
         "https://geocoding-api.open-meteo.com/v1/search",
@@ -28,8 +32,15 @@ async def _geocode(city: str):
     res = data["results"][0]
     return res["latitude"], res["longitude"]
 
+
+class WeatherNow(TypedDict):
+    city: str
+    temperature: Optional[float]
+    windspeed: Optional[float]
+
+
 @mcp.tool()
-async def weather_now(city: str) -> dict:
+async def weather_now(city: str) -> "WeatherNow":
     """
     도시명을 받아 현재 기온/풍속을 반환.
     반환: {"city": ..., "temperature": ..., "windspeed": ...} 또는 {"error": "..."}
@@ -50,13 +61,21 @@ async def weather_now(city: str) -> dict:
         },
     )
     if "error" in wjson:
-        return wjson
+        return {"error": wjson["eroor"]}
+    
     w = wjson.get("current_weather", {})
-    return {
+    data: WeatherNow = {
         "city": city,
         "temperature": w.get("temperature"),
         "windspeed": w.get("windspeed"),
     }
+
+    summary = f"{city}: {data['temperature']}°C, wind {data['windspeed']} km/h"
+    return ToolResult(
+        content=[TextContent(text=summary)],
+        structured_content=data,
+    )
+
 
 if __name__ == "__main__":
     mcp.run(
@@ -69,4 +88,4 @@ if __name__ == "__main__":
     )
 
 
-#dfdfdfdfdfdf
+
