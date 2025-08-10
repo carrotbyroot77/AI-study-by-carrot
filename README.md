@@ -14,6 +14,7 @@ Windows + PowerShell 기준 예시를 포함한다. <br>
 
 
 ## ✔ 사전준비
+* **powershell 사용**
 
 ### 1) 가상환경 및 서버 준비 (한 번만)
 
