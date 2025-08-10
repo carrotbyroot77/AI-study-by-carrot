@@ -1,6 +1,7 @@
 # 사용: python advisor.py Seoul [Busan Incheon ...]
-import sys, json
-import httpx, json
+import sys, json, os, argparse
+import httpx
+from openai import OpenAI
 
 MCP_URL = "http://127.0.0.1:8000/mcp/"  # weather_server.py의 run 설정과 일치해야 함
 
@@ -33,11 +34,7 @@ def call_mcp_weather(city: str, timeout=20):
         r = c.post("http://127.0.0.1:8000/mcp/", json=payload)  
         r.raise_for_status()
         ct = r.headers.get("content-type", "")
-
-        if "text/event-stream" in ct:
-            data = _parse_possible_sse(r.text) or {}
-        else:
-            data = r.json()
+        data = _parse_possible_sse(r.text) if "text/event-stream" in ct else r.json()
 
     # FastMCP의 JSON-RPC 응답 형태 처리(정규화)
     result = data.get("result", data)
@@ -88,19 +85,54 @@ def make_advice(temp, wind):
     # 1~2문장으로 조합
     return " ".join(parts)
 
-def main():
-    if len(sys.argv) < 2:
-        print("사용법: python advisor.py <City1> [City2 City3 ...]")
-        sys.exit(1)
+def ai_polish(city: str, temp, wind, base_advice: str, model: str = "gpt-4o-mini"):
+    """OpenAI Responses API로 한 문장 요약+조언 자연스럽게 다듬기"""
+    api_key = os.getenv("OPENAI_API_KEY")
+    if not api_key:
+        return base_advice
 
-    cities = sys.argv[1:]
-    for city in cities:
+    client = OpenAI(api_key=api_key)
+    prompt = f"""
+도시: {city}
+현재 기온: {temp if temp is not None else "NA"} °C
+풍속: {wind if wind is not None else "NA"} m/s
+기본 조언: {base_advice}
+
+요구사항:
+- 한국어로 1~2문장만 출력
+- 정보 전달 위주, 과장/군더더기 금지 (이모지는 최대 1개)
+- °C, m/s 단위 유지
+- 필요 시 옷차림/주의사항 요약
+"""
+    resp = client.responses.create(
+        model=model,
+        input=[
+            {"role": "system", "content": "너는 간결하고 실용적인 날씨 어시스턴트다."},
+            {"role": "user", "content": prompt.strip()},
+        ],
+    )
+    try:
+        return resp.output_text.strip()
+    except Exception:
+        if getattr(resp, "output", None):
+            return resp.output[0].content[0].text.strip()
+        return base_advice
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cities", nargs="+", help="조회할 도시명들")
+    parser.add_argument("--ai", action="store_true", help="AI로 문장 다듬기")
+    parser.add_argument("--model", default="gpt-4o-mini", help="AI 모델명 (기본: gpt-4o-mini)")
+    args = parser.parse_args()
+
+    for city in args.cities:
         try:
             temp, wind = call_mcp_weather(city)
             t_str = f"{temp:.1f}°C" if temp is not None else "NA"
             w_str = f"{wind:.1f} m/s" if wind is not None else "NA"
-            advice = make_advice(temp, wind)
-            print(f"{city}: {t_str}, wind {w_str} — {advice}")
+            base = make_advice(temp, wind)
+            final = ai_polish(city, temp, wind, base, model=args.model) if args.ai else base
+            print(f"{city}: {t_str}, wind {w_str} — {final}")
         except Exception as e:
             print(f"{city}: 데이터를 가져오지 못했습니다. ({e})")
 
