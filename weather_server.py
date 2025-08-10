@@ -40,14 +40,15 @@ class WeatherNow(TypedDict):
 
 
 @mcp.tool()
-async def weather_now(city: str) -> "WeatherNow":
+async def weather_now(city: str) -> dict:
     """
     도시명을 받아 현재 기온/풍속을 반환.
-    반환: {"city": ..., "temperature": ..., "windspeed": ...} 또는 {"error": "..."}
+    반환: 사람이 읽는 요약문 + structuredContent
     """
     loc = await _geocode(city)
     if not loc:
         return {"error": f"'{city}' 좌표를 찾을 수 없거나 외부 API 접근이 차단됨."}
+    
     lat, lon = loc
     wjson = await _safe_get(
         "https://api.open-meteo.com/v1/forecast",
@@ -56,21 +57,21 @@ async def weather_now(city: str) -> "WeatherNow":
             "longitude": lon,
             "current_weather": "true",
             "temperature_unit": "celsius",
-            "windspeed_unit": "kmh",
+            "windspeed_unit": "ms", # 풍속 단위 m/s
             "timezone": "auto",
         },
     )
     if "error" in wjson:
-        return {"error": wjson["eroor"]}
+        return wjson
     
     w = wjson.get("current_weather", {})
-    data: WeatherNow = {
+    data = {
         "city": city,
         "temperature": w.get("temperature"),
         "windspeed": w.get("windspeed"),
     }
 
-    summary = f"{city}: {data['temperature']}°C, wind {data['windspeed']} km/h"
+    summary = f"{city}: {data['temperature']}°C, wind {data['windspeed']} m/s"
     return ToolResult(
         content=[TextContent(text=summary)],
         structured_content=data,
