@@ -27,7 +27,7 @@ Windows + PowerShell 기준 예시를 포함한다. <br>
   
 - **`.gitignore`**: 가상환경/캐시/IDE 설정/민감 파일 무시.<br>
 <br>
----
+
 
 ## 요구 사항
 - Python **3.10+** (권장: 최신)
