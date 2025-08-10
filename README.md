@@ -1,5 +1,6 @@
 
-# Weather-MCP
+# Weather-MCP in Python
+*  *A tiny Weather MCP built with FastMCP and Open-Meteo, written in Python.*
 
 로컬 FastMCP 서버에서 현재 날씨를 가져와 **규칙 기반 조언**을 생성하고, <br>
 선택적으로 **OpenAI Responses API(chatgpt 4o mini)로 자연어 다듬기**까지 해 주는 미니 프로젝트이다. <br>
